@@ -17,7 +17,7 @@
     <h2>LOCAL TAPAS</h2>
     <p></p>
     <ul class="plates">
-      <li>Loading Tapas... <span>X</span></li>
+      <li>Loading Tapas...</li>
     </ul>
     <form class="add-items">
       <input type="text" name="item" placeholder="Item Name" required>
@@ -27,52 +27,42 @@
 
 <script>
   //localStorage.clear()
-
   const addItems = document.querySelector('.add-items')
   const itemsList = document.querySelector('.plates')
-  const items = []
 
-  function initItems(){
+  function createItem(txt){
+    var li = document.createElement('li')
+    var span = document.createElement('span')
+    span.innerText = "X"
+    li.innerText = txt
+    li.appendChild(span)
+    itemsList.appendChild(li)
+  }
+
+  function displayItemsInLocalStorage(){
     var i = 0
     while(i < localStorage.length){
-      items.push(localStorage.getItem(i))
+      createItem(localStorage.getItem(localStorage.key(i)))
       i++
     }
   }
-  initItems()
-  function initDisplay(){
-    for (let i = 0; i < items.length; i++) {
-      let li = document.createElement('li')
-      let span = document.createElement("span")
-      span.innerText = 'X'
-      li.innerText = items[i]
-      li.appendChild(span)
-      itemsList.appendChild(li)
-    }
-  }
-  initDisplay()
 
-
-
-  const spans = document.querySelectorAll('span').forEach((elm)=>{
-    elm.addEventListener('click', function(){
-      this.parentNode.remove()
-      
-    })
-  })
-  
+  displayItemsInLocalStorage()
 
   addItems.addEventListener('submit', (event)=>{
     event.preventDefault()
-    localStorage.setItem(items.length, addItems.firstElementChild.value)
-    items.push(addItems.firstElementChild.value)
-    let li = document.createElement('li')
-    li.innerText = items[items.length - 1]
-    itemsList.appendChild(li)
+    localStorage.setItem('key-' + addItems.firstElementChild.value, addItems.firstElementChild.value)
+    createItem(addItems.firstElementChild.value)
   })
-  
 
-
+  const spans = document.querySelectorAll('span')
+  spans.forEach(elm=>{
+    elm.addEventListener('click', ()=>{
+      //localStorage.removeItem("key-"+elm.parentNode.innerText.substring(0, elm.parentNode.innerText.length - 1))
+      console.log("key-"+elm.parentNode.innerText.substring(0, elm.parentNode.innerText.length - 1))
+      elm.parentNode.remove()
+    })
+  })
 </script>
 
 

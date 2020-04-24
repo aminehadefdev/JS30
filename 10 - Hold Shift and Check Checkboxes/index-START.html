@@ -99,12 +99,13 @@
   </div>
 
 <script>
-  var nbClick = 0
-  const boxs = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'));
-  boxs.forEach(box => box.addEventListener('click',handleCheck));
+  const boxs = Array.from(document.querySelectorAll('.inbox input[type="checkbox"]'))
+  boxs.forEach(box => box.addEventListener('click',handleCheck))
+
   var posA
   var posB
   var nbClick = 0
+
   function handleCheck(event){
     if(event.shiftKey){
       nbClick++
